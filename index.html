@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sethothi — Full-Stack Development, Applied AI/ML & Security Research</title>
+<meta name="description" content="Portfolio of Sethothi — final-year BSc IT student building full-stack software, applied AI/ML tools, and security research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a1930;
+    --panel:#0f2547;
+    --panel-2:#14315c;
+    --line:#254978;
+    --paper:#ffffff;
+    --muted:#a8c1e0;
+    --amber:#5ec2f0;
+    --teal:#8fd4f5;
+    --alert:#c1503d;
+    --radius:3px;
+    --maxw:920px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--amber); color:var(--ink); }
+  a{ color:inherit; }
+  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; margin:0; font-weight:600; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+
+  /* layout shell */
+  .shell{ display:flex; min-height:100vh; }
+  .rail{
+    width:220px; flex-shrink:0;
+    border-right:1px solid var(--line);
+    padding:36px 24px;
+    position:sticky; top:0; height:100vh;
+  }
+  .rail .id{ font-size:15px; font-weight:600; letter-spacing:0.02em; }
+  .rail .id-sub{ font-size:12px; color:var(--muted); margin-top:4px; }
+  .rail nav{ margin-top:56px; display:flex; flex-direction:column; gap:14px; }
+  .rail nav a{
+    font-size:13px; text-decoration:none; color:var(--muted);
+    display:flex; align-items:center; gap:10px;
+    transition:color .15s ease;
+  }
+  .rail nav a:hover, .rail nav a.active{ color:var(--paper); }
+  .rail nav a .dot{
+    width:5px; height:5px; border-radius:50%; background:var(--line); flex-shrink:0;
+    transition:background .15s ease;
+  }
+  .rail nav a:hover .dot, .rail nav a.active .dot{ background:var(--amber); }
+  .rail .rail-foot{ position:absolute; bottom:36px; left:24px; font-size:11px; color:var(--muted); }
+
+  .main{ flex:1; min-width:0; }
+  section{ padding:96px 48px; max-width:var(--maxw); }
+  section + section{ border-top:1px solid var(--line); }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--amber);
+    margin-bottom:14px;
+  }
+
+  /* hero */
+  #hero{ padding-top:80px; }
+  .boot{
+    font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--muted);
+    margin-bottom:40px; min-height:96px;
+  }
+  .boot div{ opacity:0; animation:fadeIn .25s ease forwards; }
+  .boot .ok{ color:var(--teal); }
+  #hero h1{
+    font-size:44px; line-height:1.15; letter-spacing:-0.01em; max-width:11ch;
+  }
+  #hero .role{ font-size:18px; color:var(--muted); margin-top:18px; max-width:52ch; }
+  .cta-row{ display:flex; gap:14px; margin-top:36px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 20px; border-radius:var(--radius);
+    font-size:14px; font-weight:500; text-decoration:none;
+    border:1px solid var(--line);
+  }
+  .btn-primary{ background:var(--amber); color:var(--ink); border-color:var(--amber); }
+  .btn-ghost{ color:var(--paper); }
+  .btn:hover{ opacity:0.88; }
+
+  @keyframes fadeIn{ to{ opacity:1; } }
+
+  /* focus modules */
+  .modules{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); margin-top:40px; border:1px solid var(--line); }
+  .module{ background:var(--panel); padding:26px 22px; }
+  .module .tag{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--teal); }
+  .module h3{ font-size:17px; margin-top:10px; }
+  .module p{ font-size:14px; color:var(--muted); margin-top:10px; }
+
+  /* projects */
+  .project{ padding:26px 0; border-top:1px solid var(--line); }
+  .project:first-of-type{ border-top:none; }
+  .project-head{ display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; }
+  .project-head h3{ font-size:19px; }
+  .project-status{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--teal); white-space:nowrap; }
+  .project p{ margin-top:10px; color:var(--muted); font-size:14.5px; max-width:64ch; }
+  .tags{ margin-top:14px; display:flex; gap:8px; flex-wrap:wrap; }
+  .tags span{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--paper);
+    border:1px solid var(--line); padding:3px 9px; border-radius:var(--radius);
+  }
+  .project-link{ margin-top:14px; display:inline-block; font-size:13px; color:var(--amber); text-decoration:none; }
+  .project-link:hover{ text-decoration:underline; }
+
+  /* two column: education + now */
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  .split h3{ font-size:16px; margin-bottom:16px; }
+  .split .row{ margin-bottom:18px; }
+  .split .row .when{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted); }
+  .split .row .what{ font-size:14.5px; margin-top:4px; }
+  ul.goals{ list-style:none; padding:0; margin:0; }
+  ul.goals li{ font-size:14.5px; color:var(--muted); padding:8px 0 8px 20px; position:relative; border-top:1px solid var(--line); }
+  ul.goals li:first-child{ border-top:none; }
+  ul.goals li::before{ content:'›'; position:absolute; left:0; color:var(--amber); }
+
+  /* contact */
+  #contact .links{ margin-top:32px; display:flex; flex-direction:column; gap:0; }
+  .link-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; border-top:1px solid var(--line); text-decoration:none; color:var(--paper);
+  }
+  .link-row:last-child{ border-bottom:1px solid var(--line); }
+  .link-row .l-label{ font-size:15px; }
+  .link-row .l-value{ font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--muted); }
+  .link-row:hover .l-value{ color:var(--amber); }
+  footer{ padding:32px 48px 60px; max-width:var(--maxw); font-size:12px; color:var(--muted); }
+
+  /* mobile */
+  @media (max-width:860px){
+    .shell{ flex-direction:column; }
+    .rail{ position:relative; width:100%; height:auto; border-right:none; border-bottom:1px solid var(--line); padding:24px; }
+    .rail nav{ margin-top:20px; flex-direction:row; flex-wrap:wrap; gap:16px; }
+    .rail .rail-foot{ display:none; }
+    section{ padding:56px 24px; }
+    #hero h1{ font-size:32px; max-width:none; }
+    .modules{ grid-template-columns:1fr; }
+    .split{ grid-template-columns:1fr; gap:32px; }
+    footer{ padding:24px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .boot div{ animation:none; opacity:1; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="id">SETHOTHI PHALI</div>
+    <div class="id-sub">Dev · AI/ML · Security</div>
+    <nav>
+      <a href="#hero" class="active"><span class="dot"></span>Intro</a>
+      <a href="#focus"><span class="dot"></span>Focus</a>
+      <a href="#projects"><span class="dot"></span>Projects</a>
+      <a href="#background"><span class="dot"></span>Background</a>
+      <a href="#contact"><span class="dot"></span>Contact</a>
+    </nav>
+    <div class="rail-foot mono">Maseru, Lesotho</div>
+  </aside>
+
+  <main class="main">
+
+    <section id="hero">
+      <div class="boot mono">
+        <div style="animation-delay:.05s">loading modules…</div>
+        <div style="animation-delay:.35s"><span class="ok">✓</span> full-stack-dev</div>
+        <div style="animation-delay:.55s"><span class="ok">✓</span> applied-ai-ml</div>
+        <div style="animation-delay:.75s"><span class="ok">✓</span> security-research</div>
+        <div style="animation-delay:1.05s">ready.</div>
+      </div>
+      <h1>Building software, breaking it on purpose, and learning both sides.</h1>
+      <p class="role">Final-year BSc Information Technology student at Limkokwing University of Creative Technology. I build full-stack applications and Python-based security tools, and I'm deepening my focus in web exploitation and applied ML.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#projects">View projects</a>
+        <a class="btn btn-ghost" href="cv/Sethothi_CV.pdf">Download CV</a>
+      </div>
+    </section>
+
+    <section id="focus">
+      <div class="eyebrow mono">// what I work on</div>
+      <h2 style="font-size:26px;">Three areas, one way of working</h2>
+      <div class="modules">
+        <div class="module">
+          <div class="tag mono">01 · build</div>
+          <h3>Full-stack development</h3>
+          <p>Designing and shipping web applications end to end — from static sites deployed on GitHub Pages to interactive tools with real users in mind.</p>
+        </div>
+        <div class="module">
+          <div class="tag mono">02 · apply</div>
+          <h3>AI / Machine learning</h3>
+          <p>Integrating AI models into practical workflows — using them as one part of a pipeline rather than the whole solution.</p>
+        </div>
+        <div class="module">
+          <div class="tag mono">03 · defend</div>
+          <h3>Security research</h3>
+          <p>Threat intelligence, phishing analysis, wireless penetration testing, and OSINT — moving toward bug bounty and CTF web exploitation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="eyebrow mono">// selected work</div>
+      <h2 style="font-size:26px; margin-bottom:8px;">Projects</h2>
+
+      <div class="project">
+        <div class="project-head">
+          <h3>Sigma Motors</h3>
+          <span class="project-status mono">live</span>
+        </div>
+        <p>A five-page static car dealership website, designed and deployed on GitHub Pages. Currently being modernized with JavaScript enhancements built through an agentic coding workflow.</p>
+        <div class="tags"><span>HTML/CSS</span><span>JavaScript</span><span>GitHub Pages</span></div>
+        <a class="project-link" href="https://github.com/phali-hub" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3>URLhaus Threat Intelligence Analyzer</h3>
+          <span class="project-status mono">built</span>
+        </div>
+        <p>A Python desktop application with a Tkinter GUI that queries URLhaus threat data to help identify and triage malicious URLs.</p>
+        <div class="tags"><span>Python</span><span>Tkinter</span><span>Threat Intel</span></div>
+        <a class="project-link" href="https://github.com/phali-hub" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3>Phishing Analysis Agent</h3>
+          <span class="project-status mono">built</span>
+        </div>
+        <p>A phishing analysis tool with a web-based interface for triaging suspicious messages and links.</p>
+        <div class="tags"><span>Python</span><span>Web UI</span><span>Security</span></div>
+        <a class="project-link" href="https://github.com/phali-hub" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3>Wireless Penetration Testing Toolkit</h3>
+          <span class="project-status mono">ongoing</span>
+        </div>
+        <p>Configured and evaluated wireless-auditing tools (wifite, airmon-ng) on Parrot OS for authorized penetration-testing scenarios.</p>
+        <div class="tags"><span>Parrot OS</span><span>Wireless</span><span>Pentesting</span></div>
+      </div>
+    </section>
+
+    <section id="background">
+      <div class="eyebrow mono">// context</div>
+      <h2 style="font-size:26px; margin-bottom:32px;">Background</h2>
+      <div class="split">
+        <div>
+          <h3>Education</h3>
+          <div class="row">
+            <div class="when mono">expected 2027</div>
+            <div class="what">BSc (Hons) Information Technology<br>Limkokwing University of Creative Technology — Final Year</div>
+          </div>
+          <div class="row">
+            <div class="when mono">transcript</div>
+            <div class="what"><a href="https://drive.google.com/file/d/1VqXcddy7jFuE9QABpCfipNJ00dSIhSCW/view?usp=sharing" style="color:var(--amber);">Academic transcript (link) →</a></div>
+          </div>
+        </div>
+        <div>
+          <h3>Right now</h3>
+          <ul class="goals">
+            <li>Preparing for a team-based CTF competition in November 2026, specializing in web exploitation</li>
+            <li>Building a recon-assisted, human-verified bug bounty workflow across Bugcrowd, Intigriti, and Synack</li>
+            <li>Open to remote full-stack, AI/ML, and security-adjacent roles</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="eyebrow mono">// get in touch</div>
+      <h2 style="font-size:26px;">Contact & links</h2>
+      <div class="links">
+        <a class="link-row" href="mailto:youremail@example.com">
+          <span class="l-label">Email</span><span class="l-value mono">phalisethothi@gmail.com</span>
+        </a>
+        <a class="link-row" href="https://github.com/phali-hub" target="_blank" rel="noopener">
+          <span class="l-label">GitHub</span><span class="l-value mono">github.com/phali-hub</span>
+        </a>
+        <a class="link-row" href="#">
+          <span class="l-label">LinkedIn</span><span class="l-value mono">https://www.linkedin.com/in/sethothi-phali-1451ba373/</span>
+        </a>
+        <a class="link-row" href="cv/Sethothi_CV.pdf">
+          <span class="l-label">CV</span><span class="l-value mono">download .pdf</span>
+        </a>
+      </div>
+    </section>
+
+    <footer>Maseru, Lesotho · Built and deployed on GitHub Pages</footer>
+  </main>
+</div>
+
+<script>
+  // active nav state on scroll
+  const links = document.querySelectorAll('.rail nav a');
+  const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
+  const setActive = () => {
+    let idx = 0;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top <= 120) idx = i; });
+    links.forEach(l => l.classList.remove('active'));
+    links[idx].classList.add('active');
+  };
+  document.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+</script>
+
+</body>
+</html>
